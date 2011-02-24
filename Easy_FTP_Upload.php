@@ -3,7 +3,7 @@
 Plugin Name: Easy FTP Upload 
 Plugin URI: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress
 Description: Allows direct uploading via FTP from a page or post - good for larger files such as those needed by print shops and graphic designers
-Version: 1.0 
+Version: 1.2 
 Author: Jenny Chalek 
 Author URI: http://www.bucketofwombats.com/
 */
@@ -88,8 +88,6 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 			$ret_val .= 'FTP upload failed! Sorry for any inconvenience - please contact us for assistance.';
 		} else {
 			$ret_val .= 'FTP upload succeeded!';
-		} else {
-			$ret_val .= ' Sorry for any inconvenience - please contact us for assistance and tell us the error message you received.'
 		}
 	}
 	

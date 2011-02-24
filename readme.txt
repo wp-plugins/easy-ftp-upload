@@ -3,8 +3,8 @@ Contributors: pandorawombat
 Donate link: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress/
 Tags: upload, ftp, large files
 Requires at least: 3.0
-Tested up to: 3.0.5
-Stable tag: 1.0
+Tested up to: 3.1
+Stable tag: 1.1
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files.
 
@@ -27,23 +27,7 @@ e.g.
 
 = What does it do and how do I use it? =
 
-Please see the detailed information section below.
-
-== Screenshots ==
-
-1. The upload form.
-
-== Arbitrary section ==
-
-I didn’t start out intending to write a plugin for WordPress. But then I needed to give the clients of a print shop the ability to upload large files via the print shop’s site without having to have any knowledge of – or software for – FTP. And the print shop didn’t want to have to pay any money for this ability. “Calling all open-source fiends…”
-
-I initially came across many plugins that would allow uploading of files. There was a catch, however – the normal upload method used is not FTP-based, and is subject to the file size limits set in the php.ini file. So if you have shared hosting which doesn’t allow you to control this limit – yet have people who need to upload large files – you are most likely SOL with these plugins.
-
-Then I found one plugin that claimed it could optionally be used to send via FTP. I knew this is exactly what I needed, but I never could get that plugin to work right. It seemed as though the “FTP” option might have been added as an afterthought and possibly never fully debugged, because I simply could not get it to work. At first I spent a couple of hours poring through the code of that plugin, trying to figure out why it didn’t work. Then, being the impatient soul that I am, it occurred to me that it would be faster and less frustrating to write my own plugin focusing on the functionality I wanted than to try to wade through and hack a plugin that was cluttered with all sorts of other functionality I didn’t need.
-
-Thus Easy FTP Upload was born.
-
-This is version 1.0, and the functionality is fairly basic, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin’s separate .css file, for instance.
+This is version 1.1, and the functionality is fairly basic, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin’s separate .css file, for instance.
 
 In case you want to alter things on a more advanced level, the form itself is created by importing a separate .html file included with this plugin (actually it is an HTML fragment, but it can still easily be edited with most HTML-aware code editors – or even to an extent in some WYSIWYG editors). The javascript code that is used to validate the form is included in a separate .js file. Finally, I tried to write the main .php file using verbose commenting where possible.
 
@@ -74,3 +58,17 @@ This plugin will find the default folder you have created for this FTP account, 
 In order for the form to validate and submit, I required the Contact Name field to be filled out, but not the Company Name field. I did this because some clients of the print shop were individuals rather than companies. If you wanted to force the entry of a Company Name, you could edit the .html file for that “input” to have a class of “EFU_text_req” instead of the “EFU_text” class it uses by default (and if you really want to be thorough, you’d probably want to alter the HTML describing its label to include that red asterisk).
 
 Anyway, If you find this plugin useful, I hope you’ll consider donating in order to help me support my evil open-source coding habit. Bug reports and suggestions for future added functionality are also appreciated. But this is my first plugin, so I beg you to be gentle with any criticism. Thank you.
+
+== Screenshots ==
+
+1. The upload form.
+
+== About ==
+
+I didn’t start out intending to write a plugin for WordPress. But then I needed to give the clients of a print shop the ability to upload large files via the print shop’s site without having to have any knowledge of – or software for – FTP. And the print shop didn’t want to have to pay any money for this ability. “Calling all open-source fiends…”
+
+I initially came across many plugins that would allow uploading of files. There was a catch, however – the normal upload method used is not FTP-based, and is subject to the file size limits set in the php.ini file. So if you have shared hosting which doesn’t allow you to control this limit – yet have people who need to upload large files – you are most likely SOL with these plugins.
+
+Then I found one plugin that claimed it could optionally be used to send via FTP. I knew this is exactly what I needed, but I never could get that plugin to work right. It seemed as though the “FTP” option might have been added as an afterthought and possibly never fully debugged, because I simply could not get it to work. At first I spent a couple of hours poring through the code of that plugin, trying to figure out why it didn’t work. Then, being the impatient soul that I am, it occurred to me that it would be faster and less frustrating to write my own plugin focusing on the functionality I wanted than to try to wade through and hack a plugin that was cluttered with all sorts of other functionality I didn’t need.
+
+Thus Easy FTP Upload was born.

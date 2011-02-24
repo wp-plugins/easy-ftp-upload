@@ -1,0 +1,50 @@
+<p><em>Fields with an asterisk <span style="color:red">*</span> are required.</em></p>
+<form id="EFU_main_form" class="EFU_form" onSubmit="return EFU_validateForm()" method="post" enctype="multipart/form-data">
+    <table class="EFU_table">
+        <tr class="EFU_tr">
+            <td class="EFU_td_label"><span style="color:red">* </span>Contact Name:</td>
+            <td class="EFU_td_field">
+                <input class="EFU_text_req" type="text" name="contact_name"/>
+            </td>
+        </tr>
+        <tr class="EFU_tr">
+            <td class="EFU_td_label">Company Name:</td>
+            <td class="EFU_td_field">
+                <input class="EFU_text" type="text" name="company_name"/>
+            </td>
+        </tr>
+        <tr class="EFU_tr">
+            <td class="EFU_td_label"><span style="color:red">* </span>Email:</td>
+            <td class="EFU_td_field">
+                <input class="EFU_text_req_email" type="text" name="email_add"/>
+            </td>
+        </tr>
+        <tr class="EFU_tr">
+            <td class="EFU_td_label"><span style="color:red">* </span>Select File:</td>
+            <td class="EFU_td_field">
+                <input class="EFU_file_req" type="file" name="file"/>
+            </td>
+        </tr>
+        <tr class="EFU_tr">
+            <td class="EFU_td_label">Notes and instructions:</td>
+            <td class="EFU_td_field">
+                <textarea class="EFU_textarea" name="notes" rows=2></textarea>
+            </td>
+        </tr>
+        <tr class="EFU_tr">
+            <td class="EFU_td_label">Purpose of file:</td>
+            <td class="EFU_td_field">
+                <input class="EFU_radio" type="radio" name="purpose" value="quote" checked> Quote
+                <input class="EFU_radio" type="radio" name="purpose" value="job"> Current Job
+                <input class="EFU_radio" type="radio" name="purpose" value="other"> Other (explain in notes above)
+            </td>
+        </tr>
+        <tr class="EFU_tr">
+            <td class="EFU_td_label"></td>
+            <td class="EFU_td_field">
+                <input class="EFU_submit" type="submit" name="upload" value="Upload"/>
+                <input class="EFU_reset" type="reset" name="reset" value="Reset"/>
+            </td>
+        </tr>
+    </table>
+</form>

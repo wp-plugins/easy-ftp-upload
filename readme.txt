@@ -4,7 +4,7 @@ Donate link: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress/
 Tags: upload, ftp, large files
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files.
 
@@ -62,6 +62,15 @@ Anyway, If you find this plugin useful, I hope you’ll consider donating in order
 == Screenshots ==
 
 1. The upload form.
+
+== Changelog ==
+
+= 1.2 =
+* Corrected a code typo.
+
+= 1.1 =
+* Corrected some code instructions.
+
 
 == About ==
 

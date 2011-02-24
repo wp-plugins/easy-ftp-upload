@@ -1,0 +1,116 @@
+@charset "utf-8";
+/*
+	Easy_FTP_upload.css
+	for use with the Easy FTP Upload wordpress plugin
+*/
+
+#content tr.EFU_tr td.EFU_td_label td.EFU_field {
+	border-style: none !important;
+}
+
+.EFU_form {
+	border-style: none !important;
+	border-width: 0 !important;
+	padding: .1em !important;
+}
+
+.EFU_text {
+	border-style: solid !important;
+	border-width: 1px !important;
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_text_req {
+	border-style: solid !important;
+	border-width: 1px !important;
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_text_req_email {
+	border-style: solid !important;
+	border-width: 1px !important;
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_file {
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_file_req {
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_textarea {
+	border-style: solid !important;
+	border-width: 1px !important;
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_textarea_req {
+	border-style: solid !important;
+	border-width: 1px !important;
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_radio {
+	border-style: none !important;
+	border-width: 0 !important;
+	padding: .1em !important;
+}
+
+.EFU_submit {
+	padding: .1em !important;
+	width: 4em;
+	height: 2em;
+}
+
+.EFU_reset {
+	padding: .1em !important;
+	width: 4em;
+	height: 2em;
+}
+
+.EFU_table {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	border-style: none !important;
+	border-width: 0 !important;
+	padding: .1em !important;
+	width: 100%;
+}
+
+.EFU_tr {
+    vertical-align: top;
+	border-style: none !important;
+	border-width: 0 !important;
+	padding: .1em !important;
+}
+
+.EFU_td_label {
+    width: 25%;
+    text-align: right;
+	vertical-align: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	border-style: none !important;
+	border-width: 0 !important;
+	padding: .1em .5em .1em .1em !important;
+}
+
+.EFU_td_field {
+    width: 75%;
+    text-align: left;
+	vertical-align: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	border-style: none !important;
+	border-width: 0 !important;
+	padding: .1em !important;
+}

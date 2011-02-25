@@ -4,14 +4,15 @@ Donate link: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress/
 Tags: upload, ftp, large files
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 1.2
+Stable tag: 1.3
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files.
 
 == Description ==
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files. Originally conceived to circumvent the upload file size limitations imposed on sites with shared hosting.
-NOTE: if you get an error activating this code that says "file doesn't exist" or similar after doing an automatic upgrade, please visit the plugin menu and try a second time to activate it. This usually works. I don't know why - it has something to do with accidentally switching encoding when I was editing this on a different machine. Sorry for any inconvenience!
+
+NOTE: If you are upgrading from a previous version of this plugin and get an error message during the process, try completely deleting the entire previous version, then install this as new. This is happening for some people due to a case-sensitive issue I discovered while already in the process of editing. Sorry for any inconvenience! Also, if you copied and pasted the shortcode from the readme file previously, and cannot get the plugin to work, try copying and pasting the one-line version from this latest FAQ. There was apparently an encoding issue in the way I had published the previous example.
 
 == Installation ==
 
@@ -28,14 +29,18 @@ e.g.
 
 = What does it do and how do I use it? =
 
-This is version 1.2, and the functionality is fairly basic, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
+This is version 1.3, and the functionality is fairly basic, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
 
 In case you want to alter things on a more advanced level, the form itself is created by importing a separate .html file included with this plugin (actually it is an HTML fragment, but it can still easily be edited with most HTML-aware code editors - or even to an extent in some WYSIWYG editors). The javascript code that is used to validate the form is included in a separate .js file. Finally, I tried to write the main .php file using verbose commenting where possible.
 
-Since this plugin will expose access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. This avoids exposing other usernames and passwords which you might not want to be exposed. It also allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called ìwebuploads@î [domain.com] and point it to a home directory on the FTP site called "~webuploads."
+Since this plugin will expose access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. This avoids exposing other usernames and passwords which you might not want to be exposed. It also allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
 
 You then control the plugin's implementation and behavior using shortcode. As of version 1.0, there are only four attributes to be set via shortcode, and all of them are required. Within the braces [ ], you need only insert the word:
 
+Shortcode example:
+[easy_ftp_upload server="mydomain.com" ftp_user_name="user@mydomain.com" ftp_user_pass="password" notify_email="notify@mydomain.com"]
+
+Shortcode explanation:
 [easy_ftp_upload
 
 then follow with these arguments (each separated by a space)
@@ -65,6 +70,9 @@ Anyway, If you find this plugin useful, I hope you'll consider donating in order
 1. The upload form.
 
 == Changelog ==
+
+= 1.3 =
+* Fixed problems with the load order of the .css file. Fixed improperly formed .css tags. Resolved a missing path issue related to case-sensitive naming. Updated the readme file to allow copying and pasting of a shortcode example all on one line - trying to edit the multiline one included with previous versions was producing shortcode that didn't work due to an encoding problem. 
 
 = 1.2 =
 * Corrected a code typo.

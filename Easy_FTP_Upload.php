@@ -3,7 +3,7 @@
 Plugin Name: Easy FTP Upload 
 Plugin URI: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress
 Description: Allows direct uploading via FTP from a page or post - good for larger files such as those needed by print shops and graphic designers
-Version: 1.2 
+Version: 1.3 
 Author: Jenny Chalek 
 Author URI: http://www.bucketofwombats.com/
 */
@@ -30,13 +30,20 @@ along with Easy FTP Upload.  If not, see <http://www.gnu.org/licenses/>.
 
 error_reporting(E_ERROR); //avoid displaying "warnings" that are irrelevant to end user
 
-//load the .css file
-wp_register_style ('Easy_FTP_Upload_css', '/wp-content/plugins/Easy-FTP-Upload/Easy_FTP_Upload.css');
-wp_enqueue_style ('Easy_FTP_Upload_css', '/wp-content/plugins/Easy-FTP-Upload/Easy_FTP_Upload.css');
+add_action('wp_print_styles', 'efu_add_stylesheet');
+add_action('wp_print_scripts', 'efu_add_script');
 
-//load the .js file
-wp_register_script('easy_ftp_upload_js', '/wp-content/plugins/Easy-FTP-Upload/Easy_FTP_Upload.js');
-wp_enqueue_script('easy_ftp_upload_js', '/wp-content/plugins/Easy-FTP-Upload/Easy_FTP_Upload.js');
+function efu_add_stylesheet () {
+	//load the .css file
+	wp_register_style ('Easy_FTP_Upload_css', '/wp-content/plugins/easy-ftp-upload/Easy_FTP_Upload.css');
+	wp_enqueue_style ('Easy_FTP_Upload_css', '/wp-content/plugins/easy-ftp-upload/Easy_FTP_Upload.css');
+}
+
+function efu_add_script() {
+	//load the .js file
+	wp_register_script('easy_ftp_upload_js', '/wp-content/plugins/easy-ftp-upload/Easy_FTP_Upload.js');
+	wp_enqueue_script('easy_ftp_upload_js', '/wp-content/plugins/easy-ftp-upload/Easy_FTP_Upload.js');
+}
 
 //register wp shortcode
 add_shortcode("easy_ftp_upload", "efu_easy_ftp_upload_handler");

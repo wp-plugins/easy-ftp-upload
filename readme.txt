@@ -35,10 +35,17 @@ In case you want to alter things on a more advanced level, the form itself is cr
 
 Since this plugin will expose access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. This avoids exposing other usernames and passwords which you might not want to be exposed. It also allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
 
-You then control the plugin's implementation and behavior using shortcode. As of version 1.0, there are only four attributes to be set via shortcode, and all of them are required. Within the braces [ ], you need only insert the word:
+You then control the plugin's implementation and behavior using shortcode. As of version 1.0, there are only four attributes to be set via shortcode, and all of them are required. Within the braces [ ], you need only insert your values:
 
 Shortcode example:
+
 [easy_ftp_upload server="mydomain.com" ftp_user_name="user@mydomain.com" ftp_user_pass="password" notify_email="notify@mydomain.com"]
+
+OR:
+
+[easy_ftp_upload server="mydomain.com" ftp_user_name="user" ftp_user_pass="password" notify_email="notify@mydomain.com"]
+
+depending on whether your server requires the @domain.com on the end of the username or not. If you don't know for sure, test the plugin with the username in one format, and if that doesn't work, switch to the other and test again.
 
 Shortcode explanation:
 [easy_ftp_upload
@@ -48,8 +55,8 @@ then follow with these arguments (each separated by a space)
 server="domain.com"
 the domain of your ftp server
 
-ftp_user_name="username@domain.com"
-the username for the ftp account chosen for this purpose
+ftp_user_name="username@domain.com" OR ftp_user_name="username"
+the username for the ftp account chosen for this purpose - some servers require the "@domain.com" while others don't
 
 ftp_user_pass="password"
 the password for this specific account
@@ -59,9 +66,9 @@ the email address where you would like to be notified when someone uploads somet
 
 then close the tag with ]
 
-This plugin will find the default folder you have created for this FTP account, and will then create a folder within it named by either the sender's Company Name (if one was specified) or Contact Name (if no separate Company Name given). Of course, whichever of these is used will first pass through a format scrubber to make sure the name is ìlegalî on the server (e.g. "Harry's Special Furniture" will create a directory called "harrys_special_furniture"). If the person has uploaded files before using the exact same Contact or Company info, the file will go into the folder that already exists. At this time, the plugin handles duplicates by overwriting files with the same name, but I intend to add functionality to allow for ìversioningî in a future edition, when/if I ever get time, and if there turns out to be a demand for it.
+This plugin will find the default folder you have created for this FTP account, and will then create a folder within it named by either the sender's Company Name (if one was specified) or Contact Name (if no separate Company Name given). Of course, whichever of these is used will first pass through a format scrubber to make sure the name is "legal" on the server (e.g. "Harry's Special Furniture" will create a directory called "harrys_special_furniture"). If the person has uploaded files before using the exact same Contact or Company info, the file will go into the folder that already exists. At this time, the plugin handles duplicates by overwriting files with the same name, but I intend to add functionality to allow for ìversioningî in a future edition, when/if I ever get time, and if there turns out to be a demand for it.
 
-In order for the form to validate and submit, I required the Contact Name field to be filled out, but not the Company Name field. I did this because some clients of the print shop were individuals rather than companies. If you wanted to force the entry of a Company Name, you could edit the .html file for that ìinputî to have a class of "EFU_text_req" instead of the "EFU_text" class it uses by default (and if you really want to be thorough, you'd probably want to alter the HTML describing its label to include that red asterisk).
+In order for the form to validate and submit, I required the Contact Name field to be filled out, but not the Company Name field. I did this because some clients of the print shop were individuals rather than companies. If you wanted to force the entry of a Company Name, you could edit the .html file for that "input" to have a class of "EFU_text_req" instead of the "EFU_text" class it uses by default (and if you really want to be thorough, you'd probably want to alter the HTML describing its label to include that red asterisk).
 
 Anyway, If you find this plugin useful, I hope you'll consider donating in order to help me support my evil open-source coding habit. Bug reports and suggestions for future added functionality are also appreciated. But this is my first plugin, so I beg you to be gentle with any criticism. Thank you.
 

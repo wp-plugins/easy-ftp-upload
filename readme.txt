@@ -33,37 +33,7 @@ This is version 2.0, and the functionality is fairly simple, although I did try 
 
 In case you want to alter things on a more advanced level, the form itself is created by importing a separate .html file included with this plugin (actually it is an HTML fragment, but it can still easily be edited with most HTML-aware code editors - or even to an extent in some WYSIWYG editors). The javascript code that is used to validate the form is included in a separate .js file. Finally, I tried to write the main .php file using verbose commenting where possible.
 
-<<<<<<< .mine
 Since this plugin may allow access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. However, with version 2.0, I have added an admin panel to specify this information rather than requiring it to be supplied in shortcode - this makes it much less likely that someone could "harvest" this login info. Using a login exclusively designed for this plugin would allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
-=======
-Since this plugin will expose access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. This avoids exposing other usernames and passwords which you might not want to be exposed. It also allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
-
-You then control the plugin's implementation and behavior using shortcode. As of version 1.0, there are only four attributes to be set via shortcode, and all of them are required. Within the braces [ ], you need only insert your values:
-
-Shortcode example:
-
-[easy_ftp_upload server="mydomain.com" ftp_user_name="user@mydomain.com" ftp_user_pass="password" notify_email="notify@mydomain.com"]
-
-OR:
-
-[easy_ftp_upload server="mydomain.com" ftp_user_name="user" ftp_user_pass="password" notify_email="notify@mydomain.com"]
-
-depending on whether your server requires the @domain.com on the end of the username or not. If you don't know for sure, test the plugin with the username in one format, and if that doesn't work, switch to the other and test again.
-
-Shortcode explanation:
-[easy_ftp_upload
-
-then follow with these arguments (each separated by a space)
-
-server="domain.com"
-the domain of your ftp server
-
-ftp_user_name="username@domain.com" OR ftp_user_name="username"
-the username for the ftp account chosen for this purpose - some servers require the "@domain.com" while others don't
-
-ftp_user_pass="password"
-the password for this specific account
->>>>>>> .r354795
 
 You then control the plugin's implementation and behavior using the admin menu and shortcode. As of version 2.0, there are no longer any attributes to be set via shortcode, since the account settings info has been moved to an admin menu.
 

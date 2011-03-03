@@ -169,7 +169,7 @@ function efu_easy_ftp_upload_post() {
 	$notifymessage .= 'Purpose of File: '.$purpose.PHP_EOL;
 	$notifymessage .= 'Other Notes or Instructions: '.$notes;
 	$notifysubject = 'FTP Upload Notification';
-	$notifyheader = 'From: Uploads <'.$email_adduploads.'>'.PHP_EOL;
+	$notifyheader = 'From: Uploads <'.$email_add.'>'.PHP_EOL;
 	
 	// call the email notification function with required arguments
 	$mail_sent = wp_mail($notify_email, $notifysubject, $notifymessage, $notifyheader);

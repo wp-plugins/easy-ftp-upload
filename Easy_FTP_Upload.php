@@ -28,6 +28,8 @@ You should have received a copy of the GNU General Public License
 along with Easy FTP Upload.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+include_once 'Easy_FTP_Admin.php'; //code for the options menu
+
 error_reporting(E_ERROR); //avoid displaying "warnings" that are irrelevant to end user
 
 add_action('wp_print_styles', 'efu_add_stylesheet');
@@ -56,16 +58,14 @@ function efu_easy_ftp_upload_handler($atts) {
 		'ftp_user_name' => '',
 		'ftp_user_pass' => '',
 		'notify_email' => ''
-	), $atts);
-
-	//run function that actually does the work of the plugin
-	return efu_easy_ftp_upload_function($atts);
+	), $atts); //leave this loop here for later use possibly to make versions or something
+		
+	return efu_easy_ftp_upload_function();
 	//send back data to replace shortcode in post
 }
 
 function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $source, $client_dir)  {
 	$ret_val = ''; //default return starting value assumes the worst
-	
 	//establish connection and login
 	$connection = ftp_connect($server);
 	$login = ftp_login($connection, $ftp_user_name, $ftp_user_pass);
@@ -125,16 +125,10 @@ function efu_filename_safe($filename) {
 	return $result;
 }
 
-function efu_easy_ftp_upload_function($atts) {
-	//gather data from shortcode and assign to variables
-	$server = $atts['server'];
-	$ftp_user_name = $atts['ftp_user_name'];
-	$ftp_user_pass = $atts['ftp_user_pass'];
-	$notify_email = $atts['notify_email'];
-	
+function efu_easy_ftp_upload_function() {
 	//if this is AFTER the POST action, proceed to actual data parse, upload, etc.
 	if (!empty($_POST)) {
-		return efu_easy_ftp_upload_post($server, $ftp_user_name, $ftp_user_pass, $notify_email);
+		return efu_easy_ftp_upload_post();
 	} else { //otherwise, link to and load the html form
 		ob_start();
 		include('Easy_FTP_Upload.html');
@@ -143,7 +137,14 @@ function efu_easy_ftp_upload_function($atts) {
 	}
 }
 
-function efu_easy_ftp_upload_post($server, $ftp_user_name, $ftp_user_pass, $notify_email) {
+function efu_easy_ftp_upload_post() {
+	//gather data from saved settings and assign to variables	
+	$atts = get_option('efu_plugin_options');
+	$server = $atts['efu_server'];
+	$ftp_user_name = $atts['efu_username'];
+	$ftp_user_pass = $atts['efu_user_pass'];
+	$notify_email = $atts['efu_notify'];
+	
 	//gather data from form post and assign to variables
 	$company = $_POST['company_name'];
 	$contact = $_POST['contact_name'];
@@ -161,25 +162,25 @@ function efu_easy_ftp_upload_post($server, $ftp_user_name, $ftp_user_pass, $noti
 	$dest = $_FILES['file']['name'];
 	// call the upload function itself , gather back success or failure message
 	$successful = efu_upload_file_FTP($server, $ftp_user_name, $ftp_user_pass, $dest, $source, $client_dir);
-
+	
 	// construct the email notification data
 	$notifymessage = 'Contact Name: '.$contact.PHP_EOL;
 	$notifymessage .= 'Email Address: '.$email_add.PHP_EOL;
 	$notifymessage .= 'Purpose of File: '.$purpose.PHP_EOL;
 	$notifymessage .= 'Other Notes or Instructions: '.$notes;
 	$notifysubject = 'FTP Upload Notification';
-	$notifyheader = 'From: Uploads <uploads@admiralprinting.com>'.PHP_EOL;
+	$notifyheader = 'From: Uploads <'.$email_adduploads.'>'.PHP_EOL;
 	
 	// call the email notification function with required arguments
 	$mail_sent = wp_mail($notify_email, $notifysubject, $notifymessage, $notifyheader);
 	If ($mail_sent) {
-		$successful .= ' Notification email sent.';
+		$successful .= '<br/>Notification email sent.';
 	} else {
-		$successful .= PHP_EOL.'Notification email failed to send!'.PHP_EOL;
+		$successful .= '<br/>Notification email failed to send!'.PHP_EOL;
 		$successful .= 'Even if your file uploaded successfully, '.PHP_EOL;
 		$successful .= 'for the sake of expediency you may wish '.PHP_EOL;
 		$successful .= 'to contact us and alert us to your upload.'.PHP_EOL;
 	}
-	return $successful;
+	return '<br/><p class="EFU_notify">'.$successful.'</p>';
 }
 ?>

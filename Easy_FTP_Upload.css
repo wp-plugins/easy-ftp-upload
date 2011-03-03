@@ -41,6 +41,11 @@ input.EFU_file_req {
 	width: 100%;
 }
 
+p.EFU_notify {
+	font-size: 150%;
+	color: red;
+}
+
 textarea.EFU_textarea {
 	border-style: solid !important;
 	border-width: 1px !important;

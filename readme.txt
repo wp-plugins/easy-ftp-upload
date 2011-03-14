@@ -4,7 +4,7 @@ Donate link: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress/
 Tags: upload, ftp, large files
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 2.0
+Stable tag: 2.1
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files.
 
@@ -29,11 +29,11 @@ e.g.
 
 = What does it do and how do I use it? =
 
-This is version 2.0, and the functionality is fairly simple, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
+This is version 2.1, and the functionality is fairly simple, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
 
 In case you want to alter things on a more advanced level, the form itself is created by importing a separate .html file included with this plugin (actually it is an HTML fragment, but it can still easily be edited with most HTML-aware code editors - or even to an extent in some WYSIWYG editors). The javascript code that is used to validate the form is included in a separate .js file. Finally, I tried to write the main .php file using verbose commenting where possible.
 
-Since this plugin may allow access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. However, with version 2.0, I have added an admin panel to specify this information rather than requiring it to be supplied in shortcode - this makes it much less likely that someone could "harvest" this login info. Using a login exclusively designed for this plugin would allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
+Since this plugin may allow access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. However, with version 2.x, I have added an admin panel to specify this information rather than requiring it to be supplied in shortcode - this makes it much less likely that someone could "harvest" this login info. Using a login exclusively designed for this plugin would allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
 
 You then control the plugin's implementation and behavior using the admin menu and shortcode. As of version 2.0, there are no longer any attributes to be set via shortcode, since the account settings info has been moved to an admin menu.
 
@@ -51,6 +51,10 @@ Anyway, If you find this plugin useful, I hope you'll consider donating in order
 1. The upload form.
 
 == Changelog ==
+
+= 2.1 =
+* Changed the php connect function to explicitly choose port 21, even though port 21 is the default. This may solve problems on some systems that do not recognize the default.
+* Added code to attempt connecting with several different formats of whatever settings you provide it, since different FTP servers require attributes passed in different ways.
 
 = 2.0 =
 * Added an admin panel to store the FTP and email data - this makes it much more secure than exposing this information in a shortcode. Also fixed an anomaly with the notification email header - previously, it was accidentally hard-coded with a specific value related to the original users of the code. Also made the confirmation message more prominent and red in color - and this can also be changed to suit your needs by editing the p.EFU_notify class in the .css file.

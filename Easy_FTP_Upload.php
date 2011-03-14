@@ -3,7 +3,7 @@
 Plugin Name: Easy FTP Upload 
 Plugin URI: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress
 Description: Allows direct uploading via FTP from a page or post - good for larger files such as those needed by print shops and graphic designers
-Version: 2.0 
+Version: 2.5 
 Author: Jenny Chalek 
 Author URI: http://www.bucketofwombats.com/
 */
@@ -67,22 +67,31 @@ function efu_easy_ftp_upload_handler($atts) {
 function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $source, $client_dir)  {
 	$ret_val = ''; //default return starting value assumes the worst
 	//establish connection and login
-	$connection = ftp_connect($server);
-	$login = ftp_login($connection, $ftp_user_name, $ftp_user_pass);
+	
+	//connection moved to its own function to allow for multiple-format attempts
+	$connection = efu_connection($server);
+	if (!$connection) return 'Connection attempt failed!'; //end on failure
+	
+	//if no failure, then continue
+	//login moved to its own function to allow for multiple-format attempts
+	$login = efu_login($connection, $ftp_user_name, $ftp_user_pass);
+	//$login = ftp_login($connection, $ftp_user_name, $ftp_user_pass);
 
-	if (!$connection || !$login) { 
-		$ret_val = 'Connection attempt failed!'; 
-	} else { //find and/or create directory - successful end result should be a change to the desired directory
+	if (!$login) $ret_val = 'Login attempt failed!';  //if failed to login both with and without domain name
+
+	else {
 		$success = ftp_chdir($connection, $client_dir);
 		if (!$success) { //if it fails to change dir, it probably doesn't exist, so create it
 			$success_make = ftp_mkdir($connection, $client_dir);
-			if (!$success_make) $ret_val .= 'Could not create directory!'; //if directory creation fails, program gracefully dies
-			else $success = ftp_chdir($connection, $client_dir); //if success, now try to access the directory just made
-			if (!$success) $ret_val .= 'Could not access directory!'; //if directory access fails, program gracefully dies
+			if (!$success_make) $ret_val = 'Could not create directory!'; //if directory creation fails, program gracefully dies
+		}
+		if ($ret_val == "") {
+			$success = ftp_chdir($connection, $client_dir); //if success, now try to access the directory just made
+			if (!$success) $ret_val = 'Could not access directory!'; //if directory access fails, program gracefully dies
 		}
 	}
-	  
-	if ($ret_val == '') {
+	
+	if ($ret_val == "") {//if no failure, then continue
 		// turn passive mode on
 		ftp_pasv($connection, true);
 		
@@ -123,6 +132,54 @@ function efu_filename_safe($filename) {
 
 	// Return filename
 	return $result;
+}
+
+function efu_connection($server) {
+	$connection = ftp_connect($server, '21'); //attempt #1, root domain only
+	if ($connection) return $connection; //return ftp stream if it worked
+	
+	//keep going otherwise
+	$tryThis = "ftp.".$connection;
+	$connection = ftp_connect($tryThis, '21');
+	if ($connection) return $connection; //return ftp stream if it worked
+	
+	//keep going otherwise
+	$tryThis = "www.".$connection; //our last attempt
+	$connection = ftp_connect($tryThis, '21');
+	return $connection; //returns ftp stream if it worked or false if not
+}
+
+function efu_login($connection, $ftp_user_name, $ftp_user_pass) {
+	$login = ftp_login($connection, $ftp_user_name, $ftp_user_pass);
+	if (!$login) { //if the login fails initially, try again after stripping off any domain name at the end
+		$login = ftp_login($connection, efu_username_scrub($ftp_user_name), $ftp_user_pass);
+	}
+	return $login; //return the final result whether successful or not
+}
+
+function efu_domain_scrub($server) {
+	$strWork = trim(strtolower($server)); //convert to lowercase
+	
+	if (substr($strWork, 0, 4) == "http") {
+		$strWork = substr($strWork,4); //strip http if it's there
+	}
+	$strWork = trim($strWork,"/"); //trim off any leading or training slash marks
+	if (substr($strWork, 0, 4) == "www.") {
+		$strWork = substr($strWork,4); //strip www. if it's there
+	}
+	if (substr($strWork, 0, 4) == "ftp.") {
+		$strWork = substr($strWork,4); //strip ftp. if it's there
+	}
+	// Return stripped-down domain name
+	return $strWork;
+}
+
+function efu_username_scrub($username) {
+	$whereAt = stripos($username, "@");
+	if ($whereAt) { //if the character @ is found, strip off domain name
+		$username = substr($username, 0, $whereAt);
+	}
+	return $username;
 }
 
 function efu_easy_ftp_upload_function() {

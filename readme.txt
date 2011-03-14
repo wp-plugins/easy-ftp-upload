@@ -4,7 +4,7 @@ Donate link: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress/
 Tags: upload, ftp, large files
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 2.1
+Stable tag: 2.5
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files.
 

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd"
+    >
+<html lang="en">
+<head>
+    <title><!-- Insert your title here --></title>
+    <script src="Easy_FTP_Upload.js" language="javascript"></script>
+	<SCRIPT LANGUAGE="javascript">
+	var Build_Array = {"foo" : 123456, "bar" : 789012, "baz" : 345678, "bat" : 901234};
+	</SCRIPT> 
+</head>
+<body onLoad="EFU_Admin_Menu_Create(Build_Array);">
+	<div class="wrap">
+	<div class="icon32" id="icon-options-general"><br></div>
+
+	<form id="EFU_admin_form" action="options.php" method="post" onSubmit="return EFU_validateAdmin()" enctype="multipart/form-data">
+
+	<h2>Easy FTP Upload Options</h2>
+	This plugin can support multiple versions, each with different login and notification credentials. Each version is referred to as an &ldquo;account.&rdquo; After defining an account or accounts, you then use the corresponding shortcode to designate which account is to be used for any particular page.
+    <table>
+    <tr>
+    <td colspan="3"><label for="efu_accounts">Click on an account name in the list below to edit that account, or click Add New to add another account. Then fill in the boxes below with your FTP settings and desired notification email address.</label></td>
+    <tr valign="top">
+    <td  style="width: 5em">
+    <select name="efu_accounts" id="efu_accounts" size="8" onChange="efuSelectAccount();" >
+        <option selected>Account1</option>
+        <option>Thing2</option>
+        <!--<option>Blah</option>
+        <option>HeyThere</option>-->
+    </select>
+    <td style="width: 5em">
+    <input type="button" name="efu_add_account" id="efu_add_account" style="width:5em" value="Add New" onClick="efuAddNew();"/>
+    <input type="button" name="efu_delete_account" id="efu_delete_account" style="width:5em" value="Delete" onClick="efuDelete();"/></td>
+    <td><label for="efu_account_name">Account Name:</label> <br />
+    <input type="text" name="efu_account_name" id="efu_account_name" size="40"/> <br />
+    <br />
+    <label for="efu_shortcode">Shortcode for this account (copy and <br />paste into HTML tab of page or post):</label> <br />
+    <input type="text" readonly="true" name="efu_shortcode" id="efu_shortcode" onClick="this.select();" size="40"/>
+    <input type='hidden' name='efu_invisible_array' id='efu_invisible_array'/>
+    </td>    
+    </tr>
+        <tr>
+            <td colspan="2" style="width: 11em"><label for="efu_server_name">FTP Server:</label></td>
+            <td>
+                <input type="text" name="efu_server_name" id="efu_server_name" size="40"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 11em"><label for="efu_user_name">Username:</label></td>
+            <td>
+                <input type="text" name="efu_user_name" id="efu_user_name" size="40"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 11em"><label for="efu_password">Password:</label></td>
+            <td>
+                <input type="password" name="efu_password" id="efu_password" size="40"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 11em"><label for="efu_email">Notification Email Address:</label></td>
+            <td>
+                <input type="text" name="efu_email" id="efu_email" size="40"/>
+            </td>
+        <tr>
+            <td colspan="2" style="width: 11em"></td>
+            <td>
+                <input class="EFU_submit" type="submit" name="upload" value="Add Account"/>
+                <input class="EFU_reset" type="reset" name="reset" value="Clear Form"/>
+            </td>
+        </tr>
+    </table>
+
+	<p class="submit">
+		<input name="Submit" type="submit" class="button-primary" value="Save Changes" />
+	</p>
+	</form>
+	</div>
+<br/><p class="EFU_notify">Blah!</p>
+    
+</body>
+</html>

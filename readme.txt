@@ -29,7 +29,7 @@ e.g.
 
 = What does it do and how do I use it? =
 
-This is version 2.1, and the functionality is fairly simple, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
+This is version 2.6, and the functionality is fairly simple, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
 
 In case you want to alter things on a more advanced level, the form itself is created by importing a separate .html file included with this plugin (actually it is an HTML fragment, but it can still easily be edited with most HTML-aware code editors - or even to an extent in some WYSIWYG editors). The javascript code that is used to validate the form is included in a separate .js file. Finally, I tried to write the main .php file using verbose commenting where possible.
 

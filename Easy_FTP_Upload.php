@@ -3,7 +3,7 @@
 Plugin Name: Easy FTP Upload 
 Plugin URI: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress
 Description: Allows direct uploading via FTP from a page or post - good for larger files such as those needed by print shops and graphic designers
-Version: 2.5 
+Version: 2.6 
 Author: Jenny Chalek 
 Author URI: http://www.bucketofwombats.com/
 */
@@ -79,7 +79,13 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 
 	if (!$login) $ret_val = 'Login attempt failed!';  //if failed to login both with and without domain name
 
-	else {
+	if (!$ret_val) {
+		// turn passive mode on
+		$success = ftp_pasv($connection, true);
+		if (!$success) $ret_val = 'Could not switch to passive mode!';
+	}
+	
+	if (!$ret_val) {	
 		$success = ftp_chdir($connection, $client_dir);
 		if (!$success) { //if it fails to change dir, it probably doesn't exist, so create it
 			$success_make = ftp_mkdir($connection, $client_dir);
@@ -91,10 +97,7 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 		}
 	}
 	
-	if ($ret_val == "") {//if no failure, then continue
-		// turn passive mode on
-		ftp_pasv($connection, true);
-		
+	if (!$ret_val) {//if no failure, then continue
 		//set the permissions on the newly created directory, to avoid permission-based problems
 		chmod($client_dir, 0777);
 		
@@ -146,6 +149,7 @@ function efu_connection($server) {
 	//keep going otherwise
 	$tryThis = "www.".$connection; //our last attempt
 	$connection = ftp_connect($tryThis, '21');
+	
 	return $connection; //returns ftp stream if it worked or false if not
 }
 

@@ -52,7 +52,7 @@ Anyway, If you find this plugin useful, I hope you'll consider donating in order
 
 == Changelog ==
 
-= 2.1 =
+= 2.5 =
 * Changed the php connect function to explicitly choose port 21, even though port 21 is the default. This may solve problems on some systems that do not recognize the default.
 * Added code to attempt connecting with several different formats of whatever settings you provide it, since different FTP servers require attributes passed in different ways.
 

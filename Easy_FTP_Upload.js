@@ -1,3 +1,9 @@
+/* 
+This file is part of the Easy FTP Upload WordPress plugin
+Copyright 2011 Jenny Chalek
+Current version 2.7
+http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress
+*/
 //--Global variables
 	var EFU_Options_Array;
 

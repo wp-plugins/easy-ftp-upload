@@ -1,9 +1,10 @@
+<<<<<<< .mine
 <?php  
 /* 
 Plugin Name: Easy FTP Upload 
 Plugin URI: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress
 Description: Allows direct uploading via FTP from a page or post - good for larger files such as those needed by print shops and graphic designers
-Version: 2.6 
+Version: 2.7
 Author: Jenny Chalek 
 Author URI: http://www.bucketofwombats.com/
 */
@@ -28,9 +29,12 @@ You should have received a copy of the GNU General Public License
 along with Easy FTP Upload.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+//include_once 'Easy_FTP_htaccess.php'; //code to alter .htaccess to allow enough size for php temp files
 include_once 'Easy_FTP_Admin.php'; //code for the options menu
 
 error_reporting(E_ERROR); //avoid displaying "warnings" that are irrelevant to end user
+
+//register_activation_hook(__FILE__, 'efu_alter_htaccess');
 
 add_action('wp_print_styles', 'efu_add_stylesheet');
 add_action('wp_print_scripts', 'efu_add_script');
@@ -85,13 +89,15 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 		if (!$success) $ret_val = 'Could not switch to passive mode!';
 	}
 	
-	if (!$ret_val) {	
+	if (!$ret_val) {
+		chmod($client_dir, 0755); //first, try chmod before trying to access directory that may already exist
 		$success = ftp_chdir($connection, $client_dir);
 		if (!$success) { //if it fails to change dir, it probably doesn't exist, so create it
 			$success_make = ftp_mkdir($connection, $client_dir);
 			if (!$success_make) $ret_val = 'Could not create directory!'; //if directory creation fails, program gracefully dies
 		}
-		if ($ret_val == "") {
+		if (!$ret_val) {
+			chmod($client_dir, 0755); //try chmod directory before access - possibly redundant, but necessary for some servers
 			$success = ftp_chdir($connection, $client_dir); //if success, now try to access the directory just made
 			if (!$success) $ret_val = 'Could not access directory!'; //if directory access fails, program gracefully dies
 		}
@@ -99,14 +105,14 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 	
 	if (!$ret_val) {//if no failure, then continue
 		//set the permissions on the newly created directory, to avoid permission-based problems
-		chmod($client_dir, 0777);
+		chmod($client_dir, 0755);
 		
 		//upload the file to the default directory
 		$upload = ftp_put($connection, $dest, $source, FTP_BINARY);
 		if (!$upload) {
 			$ret_val .= 'FTP upload failed! Sorry for any inconvenience - please contact us for assistance.';
 		} else {
-			$ret_val .= 'FTP upload succeeded!';
+			$ret_val = 'FTP upload succeeded!';
 		}
 	}
 	
@@ -141,14 +147,25 @@ function efu_connection($server) {
 	$connection = ftp_connect($server, '21'); //attempt #1, root domain only
 	if ($connection) return $connection; //return ftp stream if it worked
 	
+	$connection = ftp_connect($server); //attempt #2, root domain without forced port
+	if ($connection) return $connection; //return ftp stream if it worked
+	
 	//keep going otherwise
 	$tryThis = "ftp.".$connection;
 	$connection = ftp_connect($tryThis, '21');
 	if ($connection) return $connection; //return ftp stream if it worked
+
+	//keep going otherwise
+	$connection = ftp_connect($tryThis); //no forced port
+	if ($connection) return $connection; //return ftp stream if it worked
 	
 	//keep going otherwise
-	$tryThis = "www.".$connection; //our last attempt
+	$tryThis = "www.".$connection; //our last 2 attempts
 	$connection = ftp_connect($tryThis, '21');
+	if ($connection) return $connection; //return ftp stream if it worked
+
+	//keep going otherwise
+	$connection = ftp_connect($tryThis); //last try, no port
 	
 	return $connection; //returns ftp stream if it worked or false if not
 }
@@ -225,11 +242,15 @@ function efu_easy_ftp_upload_post() {
 	$successful = efu_upload_file_FTP($server, $ftp_user_name, $ftp_user_pass, $dest, $source, $client_dir);
 	
 	// construct the email notification data
+	if ($successful == 'FTP upload succeeded!') {
+		$notifysubject = 'FTP Upload Notification'; //successful upload
+	} else $notifysubject = 'FTP Upload Failed: Contact Client!'; //failed upload - need to contact client
+	
 	$notifymessage = 'Contact Name: '.$contact.PHP_EOL;
 	$notifymessage .= 'Email Address: '.$email_add.PHP_EOL;
 	$notifymessage .= 'Purpose of File: '.$purpose.PHP_EOL;
 	$notifymessage .= 'Other Notes or Instructions: '.$notes;
-	$notifysubject = 'FTP Upload Notification';
+	
 	$notifyheader = 'From: Uploads <'.$email_add.'>'.PHP_EOL;
 	
 	// call the email notification function with required arguments

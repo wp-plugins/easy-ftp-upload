@@ -4,7 +4,7 @@ Donate link: http://www.bucketofwombats.com/easy-ftp-upload-for-wordpress/
 Tags: upload, ftp, large files
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 2.6
+Stable tag: 2.7
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files.
 
@@ -18,8 +18,6 @@ NOTE: If you are upgrading from a 1.x version of this plugin, you will need to m
 
 This section describes how to install the plugin and get it working.
 
-e.g.
-
 1. Either install from the Add New button in your 'Plugins' menu...
 1. OR unzip 'Easy-FTP-Upload.zip' and load its entire folder directly to the '/wp-content/plugins/' directory...
 1. Then activate the plugin through the 'Plugins' menu in WordPress...
@@ -29,11 +27,11 @@ e.g.
 
 = What does it do and how do I use it? =
 
-This is version 2.6, and the functionality is fairly simple, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
+This is version 2.7, and the functionality is fairly simple, although I did try to construct this in a way that would allow for future expansion, while currently allowing some easy basic customizations. The formatting attributes of the basic upload form are controlled by the plugin's separate .css file, for instance.
 
 In case you want to alter things on a more advanced level, the form itself is created by importing a separate .html file included with this plugin (actually it is an HTML fragment, but it can still easily be edited with most HTML-aware code editors - or even to an extent in some WYSIWYG editors). The javascript code that is used to validate the form is included in a separate .js file. Finally, I tried to write the main .php file using verbose commenting where possible.
 
-Since this plugin may allow access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. However, with version 2.x, I have added an admin panel to specify this information rather than requiring it to be supplied in shortcode - this makes it much less likely that someone could "harvest" this login info. Using a login exclusively designed for this plugin would allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
+Since this plugin may allow access to the FTP account login info that you supply to any end user who is allowed to access the page or post where you put it, for security reasons I highly recommend that you create a separate FTP login account on your server to be used exclusively with this plugin. However, as of version 2.x, I have added an admin panel to specify this information rather than requiring it to be supplied in shortcode - this makes it much less likely that someone could "harvest" this login info. Using a login exclusively designed for this plugin would allows you to limit uploads if necessary by assigning a quota for this specific username account. You should also make a folder on your FTP site exclusively to be used by this account, and assign this as the root directory for the account. For example, you could create a special login called "webuploads@domain.com" and point it to a home directory on the FTP site called "~webuploads."
 
 You then control the plugin's implementation and behavior using the admin menu and shortcode. As of version 2.0, there are no longer any attributes to be set via shortcode, since the account settings info has been moved to an admin menu.
 
@@ -51,6 +49,11 @@ Anyway, If you find this plugin useful, I hope you'll consider donating in order
 1. The upload form.
 
 == Changelog ==
+
+= 2.7 =
+* Added additional calls to chmod possibly existing directories before trying to access them - hoping to avoid unnecessary permissions errors.
+* Changed all chmod values to 0755 instead of 0777 - to address security concerns.
+* Added additional loops to connection attempts to accommodate both explicit and implicit port numbers.
 
 = 2.6 =
 * Moved the passive mode command earlier in the routine to fix some permissions issues on certain servers.

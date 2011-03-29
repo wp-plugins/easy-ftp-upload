@@ -89,29 +89,37 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 	}
 	
 	if (!$ret_val) {
-		chmod($client_dir, 0755); //first, try chmod before trying to access directory that may already exist
+		$ret_val_ch = "";
+		$duplicate = false;
+		$chmodYes =	chmod($client_dir, 0777); //first, try chmod before trying to access directory that may already exist
+		if (!$chmodYes) $ret_val_ch = 'Could not chmod first pass.';
 		$success = ftp_chdir($connection, $client_dir);
-		if (!$success) { //if it fails to change dir, it probably doesn't exist, so create it
-			$success_make = ftp_mkdir($connection, $client_dir);
-			if (!$success_make) $ret_val = 'Could not create directory!'; //if directory creation fails, program gracefully dies
-		}
-		if (!$ret_val) {
-			chmod($client_dir, 0755); //try chmod directory before access - possibly redundant, but necessary for some servers
-			$success = ftp_chdir($connection, $client_dir); //if success, now try to access the directory just made
-			if (!$success) $ret_val = 'Could not access directory!'; //if directory access fails, program gracefully dies
-		}
-	}
-	
-	if (!$ret_val) {//if no failure, then continue
-		//set the permissions on the newly created directory, to avoid permission-based problems
-		chmod($client_dir, 0755);
+		  if (!$success) { //if it fails to change dir, it probably doesn't exist, so create it
+			  $success_make = ftp_mkdir($connection, $client_dir);
+			  if (!$success_make) $ret_val = 'Could not create directory!'; //if directory creation fails, program gracefully dies
+		  } else {
+			  $duplicate = true;
+		  }
+		  if (!$ret_val) {
+			  $chmodYes = chmod($client_dir, 0777); //try chmod directory before access - possibly redundant, but necessary for some servers
+			  if (!$chmodYes) $ret_val_ch .= 'Could not chmod second pass.';
+			  if ($duplicate == false) { //avoid a second call to chdir, which could cause failure
+				  $success = ftp_chdir($connection, $client_dir); //if success, now try to access the directory just made
+				  if (!$success) $ret_val = 'Could not access directory!'; //if directory access fails, program gracefully dies
+			  }
+		  }
+		if (!$ret_val) {//if no failure, then continue
+			//set the permissions on the newly created directory, to avoid permission-based problems
+			$chmodYes =	chmod($client_dir, 0777);
+			if (!$chmodYes) $ret_val_ch .= 'Could not chmod third pass.';
 		
-		//upload the file to the default directory
-		$upload = ftp_put($connection, $dest, $source, FTP_BINARY);
-		if (!$upload) {
-			$ret_val .= 'FTP upload failed! Sorry for any inconvenience - please contact us for assistance.';
-		} else {
-			$ret_val = 'FTP upload succeeded!';
+			//upload the file to the default directory
+			$upload = ftp_put($connection, $dest, $source, FTP_BINARY);
+			if (!$upload) {
+				$ret_val .= 'FTP upload failed! Sorry for any inconvenience - please contact us for assistance.';
+			} else {
+				$ret_val = 'FTP upload succeeded!';
+			}
 		}
 	}
 	

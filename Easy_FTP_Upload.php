@@ -1,4 +1,3 @@
-<<<<<<< .mine
 <?php  
 /* 
 Plugin Name: Easy FTP Upload 

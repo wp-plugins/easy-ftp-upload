@@ -91,7 +91,7 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 	if (!$ret_val) {
 		$ret_val_ch = "";
 		$duplicate = false;
-		$chmodYes =	chmod($client_dir, 0777); //first, try chmod before trying to access directory that may already exist
+		$chmodYes =	chmod($client_dir, 0755); //first, try chmod before trying to access directory that may already exist
 		if (!$chmodYes) $ret_val_ch = 'Could not chmod first pass.';
 		$success = ftp_chdir($connection, $client_dir);
 		  if (!$success) { //if it fails to change dir, it probably doesn't exist, so create it
@@ -101,7 +101,7 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 			  $duplicate = true;
 		  }
 		  if (!$ret_val) {
-			  $chmodYes = chmod($client_dir, 0777); //try chmod directory before access - possibly redundant, but necessary for some servers
+			  $chmodYes = chmod($client_dir, 0755); //try chmod directory before access - possibly redundant, but necessary for some servers
 			  if (!$chmodYes) $ret_val_ch .= 'Could not chmod second pass.';
 			  if ($duplicate == false) { //avoid a second call to chdir, which could cause failure
 				  $success = ftp_chdir($connection, $client_dir); //if success, now try to access the directory just made
@@ -110,7 +110,7 @@ function efu_upload_file_FTP ($server, $ftp_user_name, $ftp_user_pass, $dest, $s
 		  }
 		if (!$ret_val) {//if no failure, then continue
 			//set the permissions on the newly created directory, to avoid permission-based problems
-			$chmodYes =	chmod($client_dir, 0777);
+			$chmodYes =	chmod($client_dir, 0755);
 			if (!$chmodYes) $ret_val_ch .= 'Could not chmod third pass.';
 		
 			//upload the file to the default directory

@@ -12,7 +12,7 @@ Allow end users to upload files via FTP - accommodates larger files. Ideal for p
 
 Allow end users to upload files via FTP - accommodates larger files. Ideal for printing companies or others who require large graphic files. Originally conceived to circumvent the upload file size limitations imposed on sites with shared hosting.
 
-NOTE: If you are upgrading from a 1.x version of this plugin, you will need to make a slight change to the implementation. There is an admin menu in the Settings area, where you will specify the server and email info. The shortcode should then only say: [easy_ftp_upload] (The other parameters will no longer be needed.
+NOTE: 2.7 has a number of minor changes which may solve the problem of the program refusing to reuse directories.
 
 == Installation ==
 
@@ -38,7 +38,7 @@ You then control the plugin's implementation and behavior using the admin menu a
 Shortcode to use:
 [easy_ftp_upload]
 
-This plugin will find the default folder you have created for this FTP account, and will then create a folder within it named by either the sender's Company Name (if one was specified) or Contact Name (if no separate Company Name given). Of course, whichever of these is used will first pass through a format scrubber to make sure the name is "legal" on the server (e.g. "Harry's Special Furniture" will create a directory called "harrys_special_furniture"). If the person has uploaded files before using the exact same Contact or Company info, the file will go into the folder that already exists. At this time, the plugin handles duplicates by overwriting files with the same name, but I intend to add functionality to allow for ìversioningî in a future edition, when/if I ever get time, and if there turns out to be a demand for it.
+This plugin will find the default folder you have created for this FTP account, and will then create a folder within it named by either the sender's Company Name (if one was specified) or Contact Name (if no separate Company Name given). Of course, whichever of these is used will first pass through a format scrubber to make sure the name is "legal" on the server (e.g. "Harry's Special Furniture" will create a directory called "harrys_special_furniture"). If the person has uploaded files before using the exact same Contact or Company info, the file will go into the folder that already exists. At this time, the plugin handles duplicates by overwriting files with the same name, but I intend to add functionality to allow for "versioning" in a future edition, when/if I ever get time, and if there turns out to be a demand for it.
 
 In order for the form to validate and submit, I required the Contact Name field to be filled out, but not the Company Name field. I did this because some clients of the print shop were individuals rather than companies. If you wanted to force the entry of a Company Name, you could edit the .html file for that "input" to have a class of "EFU_text_req" instead of the "EFU_text" class it uses by default (and if you really want to be thorough, you'd probably want to alter the HTML describing its label to include that red asterisk).
 
